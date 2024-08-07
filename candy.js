@@ -10,7 +10,7 @@ var otherTile;
 window.onload = function () {
     startGame();
 
-    //1/10th of a second
+    // 1/10th of a second
     window.setInterval(function () {
         crushCandy();
         slideCandy();
@@ -19,7 +19,7 @@ window.onload = function () {
 }
 
 function randomCandy() {
-    return candies[Math.floor(Math.random() * candies.length)];
+    return candies[Math.floor(Math.random() * candies.length)]; // 0 - 5.99
 }
 
 function startGame() {
@@ -31,8 +31,8 @@ function startGame() {
             tile.src = "./images/" + randomCandy() + ".png";
 
             // TOUCH FUNCTIONALITY
-            tile.addEventListener("touchstart", touchStart); //initial touch
-            tile.addEventListener("touchend", touchEnd); //end of touch
+            tile.addEventListener("touchstart", touchStart); // Initialize touch process
+            tile.addEventListener("touchend", touchEnd); // End touch process
 
             document.getElementById("board").append(tile);
             row.push(tile);
@@ -45,16 +45,14 @@ function startGame() {
 
 function touchStart(e) {
     e.preventDefault();
-    currTile = e.target;
+    currTile = this;
 }
 
 function touchEnd(e) {
     e.preventDefault();
-    otherTile = e.target;
+    otherTile = this;
 
-    if (!currTile || currTile === otherTile) {
-        return;
-    }
+    if (currTile === otherTile) return; // Same tile, do nothing
 
     let currCoords = currTile.id.split("-");
     let r = parseInt(currCoords[0]);
@@ -66,7 +64,6 @@ function touchEnd(e) {
 
     let moveLeft = c2 == c - 1 && r == r2;
     let moveRight = c2 == c + 1 && r == r2;
-
     let moveUp = r2 == r - 1 && c == c2;
     let moveDown = r2 == r + 1 && c == c2;
 
@@ -86,17 +83,17 @@ function touchEnd(e) {
             otherTile.src = currImg;
         }
     }
-
-    currTile = null;
-    otherTile = null;
 }
 
 function crushCandy() {
+    // crushFive();
+    // crushFour();
     crushThree();
     document.getElementById("score").innerText = score;
 }
 
 function crushThree() {
+    // check rows
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 2; c++) {
             let candy1 = board[r][c];
@@ -111,6 +108,7 @@ function crushThree() {
         }
     }
 
+    // check columns
     for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 2; r++) {
             let candy1 = board[r][c];
@@ -127,6 +125,7 @@ function crushThree() {
 }
 
 function checkValid() {
+    // check rows
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 2; c++) {
             let candy1 = board[r][c];
@@ -138,6 +137,7 @@ function checkValid() {
         }
     }
 
+    // check columns
     for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 2; r++) {
             let candy1 = board[r][c];
@@ -155,7 +155,7 @@ function checkValid() {
 function slideCandy() {
     for (let c = 0; c < columns; c++) {
         let ind = rows - 1;
-        for (let r = rows - 1; r >= 0; r--) {
+        for (let r = columns - 1; r >= 0; r--) {
             if (!board[r][c].src.includes("blank")) {
                 board[ind][c].src = board[r][c].src;
                 ind -= 1;

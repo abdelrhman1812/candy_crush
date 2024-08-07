@@ -4,20 +4,35 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 #board {
-    width: 450px;
-    height: 450px;
+    width: 90vw;
+    /* Adjust width based on viewport width */
+    height: 90vw;
+    /* Maintain aspect ratio (square) */
+    max-width: 450px;
+    /* Optional: limit maximum width for larger screens */
+    max-height: 450px;
+    /* Optional: limit maximum height for larger screens */
     background-color: lightblue;
     border: 5px solid slategray;
     border-radius: 10px;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    /* 9 columns */
+    grid-gap: 2px;
+    /* Adjust gap between grid items */
 }
 
 #board img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    /* Fill the grid cell */
+    height: auto;
+    /* Maintain aspect ratio */
+    touch-action: none;
+    /* Prevent default touch actions like scrolling */
 }
